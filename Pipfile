@@ -1,0 +1,30 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+opencv-python = "*"
+torch = "1.12.0"
+torchvision = "*"
+tensorboard = "*"
+scikit-learn = "*"
+dvc = "*"
+"dvc[gs]" = "*"
+google-cloud-storage = "*"
+pandas = "*"
+imgaug = "*"
+h5py = "*"
+transformers = "*"
+
+[dev-packages]
+ipykernel = "*"
+notebook = "*"
+isort = "*"
+black = "*"
+pre-commit = "*"
+pylint = "*"
+
+[requires]
+python_version = "3.10"
