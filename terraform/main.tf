@@ -7,6 +7,10 @@ terraform {
   }
 }
 
+resource "google_compute_address" "static" {
+  name = "ipv4-address"
+}
+
 provider "google" {
   credentials = file(var.credentials_file)
 
@@ -32,8 +36,8 @@ resource "google_compute_instance" "default" {
 
   network_interface {
     network    = "default"
-    # network_ip = var.development_machine_ip
     access_config {
+      nat_ip = google_compute_address.static.address
     }
   }
 
@@ -44,8 +48,21 @@ resource "google_compute_instance" "default" {
     scopes = ["cloud-platform"]
   }
 
-  provisioner "file" {
-    source      = "Makefile"
-    destination = "/home/night/Makefile"
+  connection {
+    type     = "ssh"
+    user     = "night"
+    host     = google_compute_address.static.address
+    timeout  = "90s"
+    private_key = file(var.development_machine_private_key)
   }
+  provisioner "file" {
+      source      = "../Makefile"
+      destination = "/home/night/Makefile"
+  }
+
+provisioner "remote-exec" {
+    script = "../Makefile"
+  }
+
 }
+

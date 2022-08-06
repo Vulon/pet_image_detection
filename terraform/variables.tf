@@ -24,3 +24,7 @@ variable "development_machine_disk_size" {
 variable "development_machine_ip" {
   default = " 10.132.0.2"
 }
+
+variable "development_machine_private_key" {
+  default = "C:/Users/night/.ssh/id_rsa"
+}
