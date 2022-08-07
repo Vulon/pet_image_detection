@@ -1,0 +1,18 @@
+stages:
+  download_annotations:
+    cmd: python src/stages/download_annotations.py
+    
+    outs:
+      - "data/raw_input/train_anno.json"
+      - "data/raw_input/val_anno.json"
+    params:
+      - dataset
+
+  parse_annotations:
+    cmd: python src/stages/parse_annotations.py
+    deps:
+      - "data/raw_input/train_anno.json"
+      - "data/raw_input/val_anno.json"
+    outs:
+      - "data/raw_input/parsed_annotations.json"
+    

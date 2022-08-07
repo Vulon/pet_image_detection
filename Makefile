@@ -13,6 +13,6 @@ cd ../
 
 sudo pip3.10 install pipenv
 
-git clone  https://github.com/Vulon/pet_image_segmentation.git
-cd pet_image_segmentation
+git clone  https://github.com/Vulon/pet_image_detection.git
+cd pet_image_detection
 sudo pipenv install --dev --system

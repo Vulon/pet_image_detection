@@ -1,0 +1,4 @@
+outs:
+- md5: c4a827893210e9a4e48b8a09a6fe4fb9
+  size: 1219
+  path: dvc.lock

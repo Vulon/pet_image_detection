@@ -12,6 +12,7 @@ google-cloud-storage = "*"
 pandas = "*"
 imgaug = "*"
 transformers = "*"
+google-cloud-aiplatform = "1.16.1"
 
 [dev-packages]
 ipykernel = "*"

@@ -6,5 +6,17 @@ Configure the terraform/main.tf file: change path to the google credentials, cha
 terraform apply -auto-approve
 
 
+Development plan:
+1) download images with annotations
+2) create dataset (in h5py format)
+3) setup model registrty
+4) write training code
+5) create docker container for training
+6) upload dataset and container to cloud
+7) upload training package
+8) call vertex ai training
+9) download trained model
+10) measure metrics
+11) submit model to custom registry ? 
 
-ssh -i .\id_rsa 34.76.252.190
+

@@ -1,2 +1,7 @@
 keys/**
 venv/**
+.vscode/**
+src/__pycache__/**
+**.pyc
+data/**
+/dvc.lock
