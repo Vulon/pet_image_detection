@@ -1,0 +1,4 @@
+outs:
+- md5: 3c3d6a9a5c2d1532548d659b3442417a
+  size: 785
+  path: image_processing.py

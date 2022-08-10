@@ -6,7 +6,10 @@ stages:
       - "data/raw_input/train_anno.json"
       - "data/raw_input/val_anno.json"
     params:
-      - dataset
+      - dataset.coco_train_annotations_url
+      - dataset.coco_archive_train_filename
+      - dataset.coco_archive_val_filename
+      - dataset.raw_files_folder
 
   parse_annotations:
     cmd: python src/stages/parse_annotations.py
@@ -15,4 +18,25 @@ stages:
       - "data/raw_input/val_anno.json"
     outs:
       - "data/raw_input/parsed_annotations.json"
+    params:
+      - dataset.raw_files_folder
+      - dataset.coco_categories_map
+  
+  create_datasets:
+    cmd: python src/stages/create_datasets.py
+    deps:
+      - "data/raw_input/parsed_annotations.json"
+    outs:
+      - "data/datasets/test_images.h5py"
+      - "data/datasets/test_masks.h5py"
+      - "data/datasets/train_images.h5py"
+      - "data/datasets/train_masks.h5py"
+      - "data/datasets/val_images.h5py"
+      - "data/datasets/val_masks.h5py"      
+
+    params:
+      - dataset.dataset_files_folder
+      - dataset.train_fracture
+      - dataset.val_fracture
+      - dataset.test_fracture
     

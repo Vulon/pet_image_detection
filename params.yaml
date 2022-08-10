@@ -3,12 +3,18 @@ random_seed: 42
 dataset:
 
   coco_categories_map:
-    1: "person"
     17: "cat"
     18: "dog"
+  
   coco_train_annotations_url: "http://images.cocodataset.org/annotations/annotations_trainval2017.zip"
   coco_archive_train_filename: 'annotations/instances_train2017.json'
   coco_archive_val_filename: 'annotations/instances_val2017.json'
   
   raw_files_folder: "data/raw_input"
+  dataset_files_folder: "data/datasets"
+
+  train_fracture: 0.7
+  val_fracture: 0.2
+  test_fracture: 0.1
   
+  image_size: 512

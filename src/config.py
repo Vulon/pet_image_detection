@@ -11,6 +11,13 @@ class DatasetConfig:
     coco_archive_train_filename: str
     coco_archive_val_filename: str
     raw_files_folder: str
+    dataset_files_folder : str
+
+    train_fracture: float
+    val_fracture: float
+    test_fracture: float
+
+    image_size: int
 
 @dataclass
 class BaseConfig:

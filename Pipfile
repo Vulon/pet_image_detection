@@ -10,9 +10,9 @@ torchvision = "*"
 scikit-learn = "*"
 google-cloud-storage = "*"
 pandas = "*"
-imgaug = "*"
 transformers = "*"
 google-cloud-aiplatform = "1.16.1"
+albumentations = "*"
 
 [dev-packages]
 ipykernel = "*"
@@ -25,6 +25,9 @@ dvc = "*"
 "dvc[gs]" = "*"
 h5py = "*"
 tensorboard = "*"
+aiohttp = "*"
+aiofiles = "*"
+
 
 [requires]
 python_version = "3.10"
