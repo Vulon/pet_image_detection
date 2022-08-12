@@ -1,0 +1,67 @@
+schema: '2.0'
+stages:
+  download_annotations:
+    cmd: python src/stages/download_annotations.py
+    params:
+      params.yaml:
+        dataset.coco_archive_train_filename: annotations/instances_train2017.json
+        dataset.coco_archive_val_filename: annotations/instances_val2017.json
+        dataset.coco_train_annotations_url: http://images.cocodataset.org/annotations/annotations_trainval2017.zip
+        dataset.raw_files_folder: data/raw_input
+    outs:
+    - path: data/raw_input/train_anno.json
+      md5: fda2d4619ae093da50f04bd024ae8dc9
+      size: 529374091
+    - path: data/raw_input/val_anno.json
+      md5: db9d07b643d393bc84a45cd5c52085b6
+      size: 22542001
+  parse_annotations:
+    cmd: python src/stages/parse_annotations.py
+    deps:
+    - path: data/raw_input/train_anno.json
+      md5: fda2d4619ae093da50f04bd024ae8dc9
+      size: 529374091
+    - path: data/raw_input/val_anno.json
+      md5: db9d07b643d393bc84a45cd5c52085b6
+      size: 22542001
+    params:
+      params.yaml:
+        dataset.coco_categories_map:
+          17: cat
+          18: dog
+        dataset.raw_files_folder: data/raw_input
+    outs:
+    - path: data/raw_input/parsed_annotations.json
+      md5: 9419e0ad59d596c07dba6c8a8bf86031
+      size: 9729285
+  create_datasets:
+    cmd: python src/stages/create_datasets.py
+    deps:
+    - path: data/raw_input/parsed_annotations.json
+      md5: 9419e0ad59d596c07dba6c8a8bf86031
+      size: 9729285
+    params:
+      params.yaml:
+        dataset.dataset_files_folder: data/datasets
+        dataset.test_fracture: 0.1
+        dataset.train_fracture: 0.7
+        dataset.val_fracture: 0.2
+    outs:
+    - path: data/datasets/test_images.h5py
+      md5: d8d7182be82810044393e5082d5575c6
+      size: 504223753
+    - path: data/datasets/test_masks.h5py
+      md5: 2a85a30bd58debb2ca24e5981cd7a141
+      size: 5800441
+    - path: data/datasets/train_images.h5py
+      md5: f81bfb16218fc73c8e3f1390a95db676
+      size: 3519336083
+    - path: data/datasets/train_masks.h5py
+      md5: 84232c1520d272ff2c510b162ec7767e
+      size: 40330332
+    - path: data/datasets/val_images.h5py
+      md5: 7c744fd0f3a96d9777831066b560c923
+      size: 1003216671
+    - path: data/datasets/val_masks.h5py
+      md5: 4e7808bc373eae8b04309503625b76b6
+      size: 11535549

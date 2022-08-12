@@ -11,16 +11,6 @@ import h5py
 import tqdm
 
 
-
-# def download_image(url: str, folder: str, ) -> np.ndarray:
-#     format = os.path.basename(url).split('.')[-1]
-#     output_filename = f"image.{format}"
-#     response = requests.get(url)
-#     with open( os.path.join(folder, output_filename), "wb" ) as file:
-#         file.write(response.content)
-#     image = cv2.imread( os.path.join(folder, output_filename) )
-#     return image, output_filename
-
 def load_image(image_file_path: str):
     if os.path.exists(image_file_path):
         image = cv2.imread(image_file_path)
@@ -44,7 +34,8 @@ def split_data(data_lines: list[dict], train_fracture: float, val_fracture: floa
 
 def draw_polygon_mask( polygon: list[int], width: int, height: int ) -> np.ndarray:
     mask = np.zeros((height, width))
-    polygon = np.array(polygon, dtype=int).reshape((-1, 2))    
+
+    polygon = np.array(np.round(polygon), dtype=int).reshape((-1, 2))
     mask = cv2.fillPoly(mask, pts=[polygon], color=1)
     return mask    
 
@@ -56,6 +47,7 @@ def build_all_masks(annotations: list[dict], target_categories: list[int], width
         for anno in annotations:
             if anno['category'] == category_id:
                 mask = mask + draw_polygon_mask(anno['annotation'], width=width, height=height)
+        output_masks[:, :, i] = mask
     return output_masks.astype(np.uint8)
 
 def generate_image_name(url: str, id: int):
@@ -97,7 +89,6 @@ def create_dataset_from_annotation_lines(image_data_lines: list[dict], image_dat
 
 
 if __name__ == "__main__":
-    # project_root = "C:/PythonProjects/pet_image_detection"
     project_root = os.environ["DVC_ROOT"]
     sys.path.append(project_root)
     from src.config import get_config_from_dvc

@@ -19,10 +19,43 @@ class DatasetConfig:
 
     image_size: int
 
+    
+@dataclass
+class ModelConfig:
+    pretrained_name: str
+
+@dataclass
+class TrainingConfig:
+    downloaded_datasets_folder: str
+    train_mode: str
+    container_data_folder: str
+
+    eval_steps: int
+    train_batch_size: int
+    val_batch_size: int
+    epochs: int
+    learning_rate: float
+    weight_decay: float
+    save_steps: int
+    fp16: bool
+    gradient_accumulation_steps: int
+    eval_accumulation_steps: int
+    logging_strategy: str
+    tensorboard_logs_directory: str
+    trainer_checkpoint: str
+
+@dataclass
+class AugmentationsConfig:
+    rotate_angle: int
+    mask_size: int
+
 @dataclass
 class BaseConfig:
     random_seed: int
     dataset: DatasetConfig
+    model: ModelConfig
+    training: TrainingConfig
+    augmentations: AugmentationsConfig
 
 
 def __dataclass_from_dict(klass, d):

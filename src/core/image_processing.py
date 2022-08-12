@@ -24,3 +24,4 @@ def create_scaling_transform(side_size : int, random_seed: int):
         A.CenterCrop(height=side_size, width=side_size, always_apply=True)
     ], p=1.0)
     return transform
+

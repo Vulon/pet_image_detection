@@ -4,5 +4,5 @@ venv/**
 src/__pycache__/**
 **.pyc
 data/**
-/dvc.lock
 /notebooks/**
+.idea/**

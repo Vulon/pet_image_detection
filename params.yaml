@@ -18,3 +18,30 @@ dataset:
   test_fracture: 0.1
   
   image_size: 512
+
+model:
+  pretrained_name: "apple/deeplabv3-mobilevit-small"
+  target_categories: [8, 12]
+
+training:
+  downloaded_datasets_folder: "data/datasets"
+  train_mode: "local" # "cloud" / "local"
+  container_data_folder: "data"
+
+  eval_steps: 500
+  train_batch_size: 4
+  val_batch_size: 4
+  epochs: 4
+  learning_rate: 0.015
+  weight_decay: 0.002
+  save_steps: 500
+  fp16: False
+  gradient_accumulation_steps: 1
+  eval_accumulation_steps: 1
+  logging_strategy: "epoch"
+  tensorboard_logs_directory: "logs"
+  trainer_checkpoint: ""
+
+augmentations:
+  rotate_angle: 45
+  mask_size: 32

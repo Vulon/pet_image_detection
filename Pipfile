@@ -3,9 +3,14 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
 
+[[source]]
+url = "https://download.pytorch.org/whl/cu116/"
+verify_ssl = true
+name = "downloadpytorch"
+
 [packages]
 opencv-python = "*"
-torch = "1.12.0"
+torch = {version = "==1.12.0+cu116", index = "downloadpytorch"}
 torchvision = "*"
 scikit-learn = "*"
 google-cloud-storage = "*"
