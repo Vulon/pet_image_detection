@@ -164,6 +164,7 @@ if __name__ == "__main__":
     target_categories = sorted(config.dataset.coco_categories_map.keys())
 
     datasets_folder = os.path.join(project_root, config.dataset.dataset_files_folder)
+    os.makedirs(datasets_folder, exist_ok=True)
 
     scaling_sequence = create_scaling_transform(
         config.dataset.image_size, config.random_seed

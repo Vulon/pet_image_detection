@@ -26,19 +26,20 @@ if __name__ == "__main__":
     temp_folder = tempfile.mkdtemp()
     archive = None
     try:
-
+        datasets_folder = os.path.join(project_root, config.dataset.raw_files_folder)
+        os.makedirs(datasets_folder, exist_ok=True)
         archive = download_archive(
             config.dataset.coco_train_annotations_url, temp_folder
         )
         extract_file(
             archive,
             config.dataset.coco_archive_train_filename,
-            os.path.join(config.dataset.raw_files_folder, "train_anno.json"),
+            os.path.join(datasets_folder, "train_anno.json"),
         )
         extract_file(
             archive,
             config.dataset.coco_archive_val_filename,
-            os.path.join(config.dataset.raw_files_folder, "val_anno.json"),
+            os.path.join(datasets_folder, "val_anno.json"),
         )
     finally:
         if archive is not None:

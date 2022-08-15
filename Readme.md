@@ -47,3 +47,22 @@ This process might take some time.
 
 Once the VM is prepared you can connect to it with ssh.
 IP can be found in <a href="https://console.cloud.google.com/compute/">google console</a>
+
+You can start the mlflow server by calling <i>pipenv run python scripts/start_mlflow.py</i>
+
+To train a model you can type <i>pipenv run dvc repro</i>
+
+
+<h2>Tech stack</h2>
+
+<ul>
+<li>language: python 3.10</li>
+<li>Cloud: Google Cloud Platform</li>
+<li>IaC: Terraform</li>
+<li>Experiment tracking: mlflow + dvc</li>
+<li>model registry: mlflow</li>
+<li>Workflow orchestration: dvc</li>
+
+
+
+</ul>

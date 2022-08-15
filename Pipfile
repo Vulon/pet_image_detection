@@ -19,6 +19,7 @@ transformers = "*"
 fastapi = "*"
 uvicorn = "*"
 python-multipart = "*"
+gunicorn = "*"
 
 [dev-packages]
 protobuf = {version = "==3.19.4"}

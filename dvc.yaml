@@ -1,4 +1,5 @@
 stages:
+
   prepare_code:
     cmd: pre-commit install
     deps:

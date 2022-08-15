@@ -4,8 +4,8 @@ stages:
     cmd: python src/stages/download_annotations.py
     deps:
     - path: src/stages/download_annotations.py
-      md5: e18c04eb1086b719b544bf30d69ccf92
-      size: 1284
+      md5: a9e261725127989be3748cca1f731e47
+      size: 1390
     params:
       params.yaml:
         dataset.coco_archive_train_filename: annotations/instances_train2017.json
@@ -150,3 +150,5 @@ stages:
       md5: 0f648d5e28749774d7e520400ca17d83.dir
       size: 25655678
       nfiles: 2
+  create_folders:
+    cmd: python src/stages/create_folders.py
