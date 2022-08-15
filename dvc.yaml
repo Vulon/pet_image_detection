@@ -76,13 +76,3 @@ stages:
     deps:
       - "ScoringDockerfile"
       - "output/model"
-  upload_container:
-    cmd: docker push eu.gcr.io/${project_name}/pet_segmentation:${version}
-    deps:
-      - "ScoringDockerfile"
-      - "output/model"
-  update_service:
-    cmd: gcloud run deploy pet_image_segmentation_service --image eu.gcr.io/${project_name}/pet_segmentation:${version}
-    deps:
-      - "ScoringDockerfile"
-      - "output/model"

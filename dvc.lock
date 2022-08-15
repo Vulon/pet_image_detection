@@ -119,19 +119,29 @@ stages:
       md5: a5c844a5e007d9ee5880083c4593cff3
       size: 1440
     - path: src/train_package/train_model.py
-      md5: 680d57651ceb171193a47149701fbe79
-      size: 7146
+      md5: e2e881adc01b214951f8150daac20571
+      size: 7115
     outs:
     - path: output/model
       md5: 0f648d5e28749774d7e520400ca17d83.dir
       size: 25655678
       nfiles: 2
     - path: output/test_metrics.json
-      md5: 84c4e77e993733db3fcea2cbb6654eda
-      size: 283
+      md5: c4292baa897dd49255b6abe1721a2c72
+      size: 280
   build_docker:
     cmd: docker build -f ScoringDockerfile --tag eu.gcr.io/curious-song-343314/pet_segmentation:0.1
       .
+    deps:
+    - path: ScoringDockerfile
+      md5: 2034d57dac10defa6cb4dafd59797c95
+      size: 453
+    - path: output/model
+      md5: 0f648d5e28749774d7e520400ca17d83.dir
+      size: 25655678
+      nfiles: 2
+  upload_container:
+    cmd: docker push eu.gcr.io/curious-song-343314/pet_segmentation:0.1
     deps:
     - path: ScoringDockerfile
       md5: 2034d57dac10defa6cb4dafd59797c95

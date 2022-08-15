@@ -28,4 +28,4 @@ cd pet_image_detection
 python3.10 -m venv venv
 venv/Scripts/activate
 sudo pip3.10 install pipenv
-sudo pipenv install --dev --system
+sudo pipenv install --dev

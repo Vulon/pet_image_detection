@@ -11,6 +11,16 @@ resource "google_compute_address" "static" {
   name = "ipv4-address"
 }
 
+resource "google_storage_bucket" "static-site" {
+  name          = var.mlflow_bucket
+  location      = var.region
+  force_destroy = false
+
+  #uniform_bucket_level_access = true
+
+}
+
+
 provider "google" {
   credentials = file(var.credentials_file)
 
@@ -63,13 +73,5 @@ resource "google_compute_instance" "default" {
 provisioner "remote-exec" {
     script = "../scripts/Makefile"
   }
-
-}
-resource "google_storage_bucket" "static-site" {
-  name          = var.mlflow_bucket
-  location      = var.region
-  force_destroy = false
-
-  uniform_bucket_level_access = true
 
 }
