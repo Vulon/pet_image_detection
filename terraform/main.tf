@@ -56,13 +56,12 @@ resource "google_compute_instance" "default" {
     private_key = file(var.development_machine_private_key)
   }
   provisioner "file" {
-      source      = "../Makefile"
+      source      = "../scripts/Makefile"
       destination = "/home/night/Makefile"
   }
 
 provisioner "remote-exec" {
-    script = "../Makefile"
+    script = "../scripts/Makefile"
   }
 
 }
-

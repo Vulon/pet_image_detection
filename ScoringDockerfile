@@ -1,0 +1,18 @@
+FROM python:3.10.5-slim-bullseye
+USER root
+
+COPY "src/score_package" "/home/"
+WORKDIR /home/score_package/
+
+COPY ["Pipfile", "Pipfile.lock", "params.yaml", "/home/score_package/"]
+RUN pip3 install --no-cache-dir pipenv
+RUN pipenv install --system --deploy
+
+
+COPY output/model/pytorch_model.bin /home/score_package/
+
+ENV PACKAGE_DIR=/home/score_package/
+
+EXPOSE 7000
+
+CMD ["uvicorn", "server:app", "--port", "7000", "--host", "0.0.0.0"]

@@ -1,7 +1,12 @@
 stages:
+  prepare_code:
+    cmd: pre-commit install
+    deps:
+      - ".pre-commit-config.yaml"
   download_annotations:
     cmd: python src/stages/download_annotations.py
-    
+    deps:
+      - "src/stages/download_annotations.py"
     outs:
       - "data/raw_input/train_anno.json"
       - "data/raw_input/val_anno.json"
@@ -16,27 +21,59 @@ stages:
     deps:
       - "data/raw_input/train_anno.json"
       - "data/raw_input/val_anno.json"
+      - "src/stages/parse_annotations.py"
     outs:
       - "data/raw_input/parsed_annotations.json"
     params:
       - dataset.raw_files_folder
       - dataset.coco_categories_map
-  
+
   create_datasets:
     cmd: python src/stages/create_datasets.py
     deps:
       - "data/raw_input/parsed_annotations.json"
+      - "src/stages/create_datasets.py"
     outs:
       - "data/datasets/test_images.h5py"
       - "data/datasets/test_masks.h5py"
       - "data/datasets/train_images.h5py"
       - "data/datasets/train_masks.h5py"
       - "data/datasets/val_images.h5py"
-      - "data/datasets/val_masks.h5py"      
+      - "data/datasets/val_masks.h5py"
 
     params:
       - dataset.dataset_files_folder
       - dataset.train_fracture
       - dataset.val_fracture
       - dataset.test_fracture
-    
+
+  train_model:
+    cmd: python src/train_package/train_model.py ${training.train_mode}
+    deps:
+      - "src/train_package/train_model.py"
+      - "data/datasets/test_images.h5py"
+      - "data/datasets/test_masks.h5py"
+      - "data/datasets/train_images.h5py"
+      - "data/datasets/train_masks.h5py"
+      - "data/datasets/val_images.h5py"
+      - "data/datasets/val_masks.h5py"
+    outs:
+      - "output/model"
+    metrics:
+      - "output/test_metrics.json"
+
+  build_docker:
+    cmd: docker build -f ScoringDockerfile --tag eu.gcr.io/${project_name}/pet_segmentation:${version} .
+    deps:
+      - "ScoringDockerfile"
+      - "output/model"
+  upload_container:
+    cmd: docker push eu.gcr.io/${project_name}/pet_segmentation:${version}
+    deps:
+      - "ScoringDockerfile"
+      - "output/model"
+  update_service:
+    cmd: gcloud run deploy pet_image_segmentation_service --image eu.gcr.io/${project_name}/pet_segmentation:${version}
+    deps:
+      - "ScoringDockerfile"
+      - "output/model"

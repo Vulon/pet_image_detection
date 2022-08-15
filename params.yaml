@@ -1,22 +1,24 @@
 random_seed: 42
+project_name: "curious-song-343314"
+version: 0.1
 
 dataset:
 
   coco_categories_map:
     17: "cat"
     18: "dog"
-  
+
   coco_train_annotations_url: "http://images.cocodataset.org/annotations/annotations_trainval2017.zip"
   coco_archive_train_filename: 'annotations/instances_train2017.json'
   coco_archive_val_filename: 'annotations/instances_val2017.json'
-  
+
   raw_files_folder: "data/raw_input"
   dataset_files_folder: "data/datasets"
 
   train_fracture: 0.7
   val_fracture: 0.2
   test_fracture: 0.1
-  
+
   image_size: 512
 
 model:
@@ -31,17 +33,24 @@ training:
   eval_steps: 500
   train_batch_size: 4
   val_batch_size: 4
-  epochs: 4
+  epochs: 1
   learning_rate: 0.015
   weight_decay: 0.002
-  save_steps: 500
+  save_steps: 1500
   fp16: False
   gradient_accumulation_steps: 1
   eval_accumulation_steps: 1
   logging_strategy: "epoch"
   tensorboard_logs_directory: "logs"
   trainer_checkpoint: ""
+  test_metrics_path: "output/test_metrics.json"
 
 augmentations:
   rotate_angle: 45
   mask_size: 32
+
+score:
+  masks_names:
+    0: "cat"
+    1: "dog"
+  model_path: "output/model"

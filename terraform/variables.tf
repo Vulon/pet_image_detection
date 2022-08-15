@@ -3,6 +3,10 @@ variable "project" {
   default = "curious-song-343314"
 }
 
+variable "mlflow_bucket" {
+  default = "mlflow_storage_bucket"
+}
+
 variable "credentials_file" {
   default = "../keys/terraform-keys.json"
 }
@@ -21,9 +25,7 @@ variable "development_machine_type" {
 variable "development_machine_disk_size" {
   default = "50"
 }
-variable "development_machine_ip" {
-  default = " 10.132.0.2"
-}
+
 
 variable "development_machine_private_key" {
   default = "C:/Users/night/.ssh/id_rsa"

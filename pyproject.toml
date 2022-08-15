@@ -1,0 +1,5 @@
+[tool.isort]
+profile = "black"
+
+[settings]
+known_third_party = ["aiofiles", "aiohttp", "albumentations", "augmentations", "cv2", "dataset", "fastapi", "google", "h5py", "metrics", "mlflow", "model", "numpy", "requests", "score_models", "torch", "tqdm", "transformers", "yaml"]

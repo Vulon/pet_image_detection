@@ -6,3 +6,6 @@ src/__pycache__/**
 data/**
 /notebooks/**
 .idea/**
+/logs/**
+/output/**
+/mlruns/**
