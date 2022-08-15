@@ -9,17 +9,15 @@ verify_ssl = true
 name = "downloadpytorch"
 
 [packages]
+torch = {version = "==1.12.0+cu116", index = "downloadpytorch"}
 opencv-python = "*"
 pipenv = "*"
-torch = {version = "==1.12.0+cu116", index = "downloadpytorch"}
 torchvision = "*"
-scikit-learn = "*"
-google-cloud-storage = "*"
 transformers = "*"
 fastapi = "*"
 uvicorn = "*"
 python-multipart = "*"
-gunicorn = "*"
+
 
 [dev-packages]
 protobuf = {version = "==3.19.4"}
@@ -38,6 +36,9 @@ aiohttp = "*"
 aiofiles = "*"
 mlflow = "*"
 matplotlib = "*"
+gunicorn = "*"
+google-cloud-storage = "*"
+scikit-learn = "*"
 
 
 [requires]

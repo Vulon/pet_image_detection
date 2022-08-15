@@ -56,7 +56,7 @@ To train a model you can type <i>pipenv run dvc repro</i>
 
 
 You might need to call <i>sudo usermod -aG docker $USER | newgrp docker</i> to build the docker image
-
+Also, you might need to provision VM with more resources, sometimes docker runs out of memory.
 
 <h2>Tech stack</h2>
 

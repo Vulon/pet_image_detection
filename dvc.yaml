@@ -77,3 +77,4 @@ stages:
     deps:
       - "ScoringDockerfile"
       - "output/model"
+      - "Pipfile"
