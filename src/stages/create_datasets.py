@@ -4,6 +4,7 @@ import random
 import shutil
 import sys
 import tempfile
+import time
 
 import cv2
 import h5py
@@ -140,10 +141,7 @@ if __name__ == "__main__":
     sys.path.append(project_root)
     from src.config import get_config_from_dvc
     from src.core.download_utlis import async_download_files
-    from src.core.image_processing import (
-        create_scaling_sequence,
-        create_scaling_transform,
-    )
+    from src.core.image_processing import create_scaling_transform
 
     config = get_config_from_dvc()
 
@@ -172,6 +170,7 @@ if __name__ == "__main__":
     )
 
     print("Started val images download")
+    start = time.time()
     create_dataset_from_annotation_lines(
         val_lines,
         os.path.join(datasets_folder, "val_images.h5py"),
@@ -179,6 +178,8 @@ if __name__ == "__main__":
         target_categories,
         scaling_sequence,
     )
+    print("Finished val images download in", time.time() - start)
+    start = time.time()
     print("Started test images download")
     create_dataset_from_annotation_lines(
         test_lines,
@@ -187,6 +188,8 @@ if __name__ == "__main__":
         target_categories,
         scaling_sequence,
     )
+    print("Finished test images download in", time.time() - start)
+    start = time.time()
     print("Started train images download")
     create_dataset_from_annotation_lines(
         train_lines,
@@ -195,3 +198,6 @@ if __name__ == "__main__":
         target_categories,
         scaling_sequence,
     )
+    print("Finished train images download in", time.time() - start)
+
+    print("Download finished")

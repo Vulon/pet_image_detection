@@ -2,6 +2,8 @@ random_seed: 42
 project_name: "curious-song-343314"
 version: 0.1
 
+
+
 dataset:
 
   coco_categories_map:
@@ -54,3 +56,9 @@ score:
     0: "cat"
     1: "dog"
   model_path: "output/model"
+
+mlflow:
+  artifact_storage_bucket: "<MLFLOW_BUCKET>"
+  host: "0.0.0.0"
+  port: "5000"
+  key_name: "curious-song-343314-28def15d3b12.json"

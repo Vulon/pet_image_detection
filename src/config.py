@@ -63,6 +63,14 @@ class ScoringConfig:
 
 
 @dataclass
+class MlflowConfig:
+    artifact_storage_bucket: str
+    host: str
+    port: str
+    key_name: str
+
+
+@dataclass
 class BaseConfig:
     random_seed: int
     project_name: str
@@ -72,6 +80,7 @@ class BaseConfig:
     training: TrainingConfig
     augmentations: AugmentationsConfig
     score: ScoringConfig
+    mlflow: MlflowConfig
 
 
 def __dataclass_from_dict(klass, d):

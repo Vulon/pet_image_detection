@@ -47,6 +47,14 @@ stages:
       - dataset.val_fracture
       - dataset.test_fracture
 
+  prepare_training:
+    cmd: python src/stages/prepare_training.py
+    deps:
+      - "params.yaml"
+      - "src/stages/prepare_training.py"
+    outs:
+      - "src/train_package/params.yaml"
+
   train_model:
     cmd: python src/train_package/train_model.py ${training.train_mode}
     deps:
@@ -57,6 +65,7 @@ stages:
       - "data/datasets/train_masks.h5py"
       - "data/datasets/val_images.h5py"
       - "data/datasets/val_masks.h5py"
+      - "src/train_package/params.yaml"
     outs:
       - "output/model"
     metrics:

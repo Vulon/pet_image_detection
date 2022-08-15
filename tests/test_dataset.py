@@ -2,10 +2,12 @@ import os
 import shutil
 import tempfile
 from unittest import TestCase
+from unittest.mock import Mock
 
 import albumentations as A
 import h5py
 import numpy as np
+from transformers import MobileViTFeatureExtractor
 
 from src.train_package.dataset import SegmentationDataset
 
@@ -27,10 +29,14 @@ class TestSegmentationDataset(TestCase):
             mask_file["a"] = mask
             image_file.close()
             mask_file.close()
+            feature_extractor = Mock(
+                return_value={"pixel_values": image.reshape((1, 16, 16))}
+            )
 
             dataset = SegmentationDataset(
                 os.path.join(folder, "image.h5py"),
                 os.path.join(folder, "mask.h5py"),
+                feature_extractor,
                 transform,
                 None,
             )

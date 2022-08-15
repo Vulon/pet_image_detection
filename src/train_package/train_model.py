@@ -96,14 +96,16 @@ if __name__ == "__main__":
     train_mode = get_cli_train_mode_argument()
     if train_mode == "local":
         project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-        config_path = os.path.join(project_root, "params.yaml")
+        # config_path = os.path.join(project_root, "params.yaml")
     elif train_mode == "cloud":
         project_root = os.path.dirname(__file__)
-        config_path = os.path.join(project_root, "params.yaml")
+        # config_path = os.path.join(project_root, "params.yaml")
     else:
         raise Exception(
             f"Training mode argument {train_mode} must be 'local' or 'cloud'"
         )
+    package_path = os.path.dirname(__file__)
+    config_path = os.path.join(package_path, "params.yaml")
 
     with open(config_path, "r") as file:
         config = yaml.safe_load(file)
@@ -160,8 +162,18 @@ if __name__ == "__main__":
         eval_dataset=val_dataset,
         compute_metrics=create_compute_metrics_function(),
     )
+    trainer.save_model(os.path.join(project_root, config["score"]["model_path"]))
+    model_name = f"{config['model']['pretrained_name']}_{config['version']}"
+    run_name = f"model_name_{datetime.datetime.now().strftime('%Y_%m_%d')}"
+    host = config["mlflow"]["host"]
+    if host == "0.0.0.0":
+        host = "127.0.0.1"
 
-    run_name = f"{config['model']['pretrained_name']}_{config['version']}_{datetime.datetime.now().strftime('%Y_%m_%d')}"
+    mlflow.set_tracking_uri(f"http://{host}:{config['mlflow']['port']}")
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.join(
+        project_root, "keys", config["mlflow"]["key_name"]
+    )
+    mlflow.set_experiment(model_name)
 
     with mlflow.start_run(run_name=run_name) as run:
         trainer.train(
@@ -172,13 +184,18 @@ if __name__ == "__main__":
         metrics = trainer.evaluate(test_dataset)
         mlflow.log_metrics(metrics)
         mlflow.log_params(config["model"])
-        mlflow.log_params(config["training"])
+        # mlflow.log_params(config["training"])
 
-        mlflow.pytorch.log_model(model)
+        # mlflow.pytorch.log_model(
+        #     model, artifact_path=f"gs://{ config['mlflow']['artifact_storage_bucket'] }"
+        # )
+
+        mlflow.pytorch.log_model(model, artifact_path=model_name)
+        model_uri = f"runs:/{run.info.run_id}/{model_name}"
+        print("Trying to register model. URI", model_uri, "model name", model_name)
+        mlflow.register_model(model_uri, model_name)
 
     with open(
         os.path.join(project_root, config["training"]["test_metrics_path"]), "w"
     ) as file:
         json.dump(metrics, file)
-
-    trainer.save_model(os.path.join(project_root, config["score"]["model_path"]))

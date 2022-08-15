@@ -26,13 +26,14 @@ class SegmentationDataset(Dataset):
         self.close()
 
     def __len__(self):
+        # TODO CHANGE IT LATER !
+        return 10
         return len(self.keys)
 
     def apply_feature_extractor(self, image: np.ndarray) -> torch.Tensor:
-        value = self.feature_extractor(image=image, return_tensors="pt")
-        image_tensor = value["image"]
-        print("IMage tensor", image_tensor.shape)
-
+        image_tensor = self.feature_extractor(images=image, return_tensors="pt")[
+            "pixel_values"
+        ].squeeze(0)
         return image_tensor
 
     def __getitem__(self, index: int) -> dict[str, torch.Tensor]:
