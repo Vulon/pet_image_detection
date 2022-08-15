@@ -50,7 +50,12 @@ IP can be found in <a href="https://console.cloud.google.com/compute/">google co
 
 You can start the mlflow server by calling <i>pipenv run python scripts/start_mlflow.py</i>
 
+Copy Google Mlflow credentials key to the keys folder in the cloud. You can use scp tool for that.
+
 To train a model you can type <i>pipenv run dvc repro</i>
+
+
+You might need to call <i>sudo usermod -aG docker $USER | newgrp docker</i> to build the docker image
 
 
 <h2>Tech stack</h2>

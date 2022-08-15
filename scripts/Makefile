@@ -35,3 +35,6 @@ python3.10 -m venv venv
 venv/Scripts/activate
 sudo pip3.10 install pipenv
 sudo pipenv install --dev
+
+sudo usermod -aG docker $USER
+newgrp docker
