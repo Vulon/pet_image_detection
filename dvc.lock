@@ -48,8 +48,8 @@ stages:
       md5: 9419e0ad59d596c07dba6c8a8bf86031
       size: 9729285
     - path: src/stages/create_datasets.py
-      md5: 8a82f353dfadc33cd138654d60d63891
-      size: 7003
+      md5: 8ef0b1815ecb36c5505458e60a7356bb
+      size: 7052
     params:
       params.yaml:
         dataset.dataset_files_folder: data/datasets
@@ -70,11 +70,11 @@ stages:
       md5: 0df7d237358f9e60da48396698a98ef0
       size: 40336554
     - path: data/datasets/val_images.h5py
-      md5: 177d41e3d224db2075f60f98532a6592
-      size: 1000850033
+      md5: 7c744fd0f3a96d9777831066b560c923
+      size: 1003216671
     - path: data/datasets/val_masks.h5py
-      md5: ecbbf9998126e370c6a21414cb0d1cd1
-      size: 11508231
+      md5: 4e7808bc373eae8b04309503625b76b6
+      size: 11535549
   prepare_code:
     cmd: pre-commit install
     deps:
@@ -110,11 +110,11 @@ stages:
       md5: 0df7d237358f9e60da48396698a98ef0
       size: 40336554
     - path: data/datasets/val_images.h5py
-      md5: 177d41e3d224db2075f60f98532a6592
-      size: 1000850033
+      md5: 7c744fd0f3a96d9777831066b560c923
+      size: 1003216671
     - path: data/datasets/val_masks.h5py
-      md5: ecbbf9998126e370c6a21414cb0d1cd1
-      size: 11508231
+      md5: 4e7808bc373eae8b04309503625b76b6
+      size: 11535549
     - path: src/train_package/params.yaml
       md5: a5c844a5e007d9ee5880083c4593cff3
       size: 1440
@@ -127,8 +127,8 @@ stages:
       size: 25655678
       nfiles: 2
     - path: output/test_metrics.json
-      md5: c4292baa897dd49255b6abe1721a2c72
-      size: 280
+      md5: 1758da6795efe97a68e34363d7ab5c73
+      size: 283
   build_docker:
     cmd: docker build -f ScoringDockerfile --tag eu.gcr.io/curious-song-343314/pet_segmentation:0.1
       .

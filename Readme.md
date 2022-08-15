@@ -62,7 +62,10 @@ To train a model you can type <i>pipenv run dvc repro</i>
 <li>Experiment tracking: mlflow + dvc</li>
 <li>model registry: mlflow</li>
 <li>Workflow orchestration: dvc</li>
-
-
+<li>Model deployment: Model containerized with Fast API server</li>
+<li>Unit tests: unittest</li>
+<li>Formatter: black and isort</li>
+<li>pre-commit hooks: pre-commit</li>
+<li>Makefile: file with bash commands to setup VM</li>
 
 </ul>
