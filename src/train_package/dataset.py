@@ -13,6 +13,7 @@ class SegmentationDataset(Dataset):
         feature_extractor,
         transform: A.DualTransform,
         additional_segmentation_transform: A.DualTransform = None,
+        data_portion=1.0,
     ) -> None:
         super().__init__()
         self.images = h5py.File(images_file_path, "r")
@@ -21,14 +22,13 @@ class SegmentationDataset(Dataset):
         self.feature_extractor = feature_extractor
         self.transform = transform
         self.additional_segmentation_transform = additional_segmentation_transform
+        self.data_portion = data_portion
 
     def __del__(self):
         self.close()
 
     def __len__(self):
-        # TODO CHANGE IT LATER !
-        return 10
-        return len(self.keys)
+        return int(self.data_portion * len(self.keys))
 
     def apply_feature_extractor(self, image: np.ndarray) -> torch.Tensor:
         image_tensor = self.feature_extractor(images=image, return_tensors="pt")[
@@ -56,6 +56,11 @@ class SegmentationDataset(Dataset):
         del transformed["mask"]
 
         return transformed
+
+    def get_raw_image(self, index: int):
+        key = self.keys[index]
+        image = self.images[key][:]
+        return image
 
     def close(self):
         self.images.close()

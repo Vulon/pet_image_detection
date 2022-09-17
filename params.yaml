@@ -32,24 +32,67 @@ training:
   train_mode: "local" # "cloud" / "local"
   container_data_folder: "data"
 
-  eval_steps: 500
-  train_batch_size: 4
-  val_batch_size: 4
-  epochs: 1
+  evaluation_strategy: "steps"#"epoch"/"steps"
+  eval_steps: 50 # 250
+  train_batch_size: 4 #4
+  val_batch_size: 4   #4
+  epochs: 10
+  warmup_epochs: 4
   learning_rate: 0.015
-  weight_decay: 0.002
-  save_steps: 1500
-  fp16: False
+  weight_decay: 0.005
+  save_steps: 500
+  fp16: True
   gradient_accumulation_steps: 1
   eval_accumulation_steps: 1
-  logging_strategy: "epoch"
+  logging_strategy: "epoch" #"epoch"/"steps"
+  logging_steps: 250
+
   tensorboard_logs_directory: "logs"
   trainer_checkpoint: ""
   test_metrics_path: "output/test_metrics.json"
 
+  data_portion: 0.2 # 1.0
+
 augmentations:
-  rotate_angle: 45
   mask_size: 32
+
+  rotate_angle: 45
+  rotate_p: 0.05
+  flip_p: 0.05
+  rotate_sequence_p: 1.0
+
+  gauss_noise_var_limit: [64, 512]
+  gauss_noise_p: 0.1
+  iso_color_shift: [0.01, 0.1]
+  iso_intensity: [0.1, 0.5]
+  iso_p: 0.1
+  noise_sequence_p: 1.0
+
+  brightness : 0.2
+  contrast : 0.2
+  saturation : 0.2
+  hue : 0.2
+  color_jitter_p : 0.4
+  CLAHE_p : 0.1
+  graphical_sequence_p : 1.0
+
+  downscale_scale_min: 0.6
+  downscale_scale_max: 0.6
+  downscale_p: 0.1
+  image_compression_p: 0.1
+  compression_sequence_p: 1.0
+
+  pixel_dropout_dropout_prob : 0.01
+  pixel_dropout_p : 0.1
+  grid_distortion_p : 0.1
+  optical_distortion_p: 0.2
+  perspective_p: 0.1
+  dropout_sequence_p : 1.0
+
+  ringing_overshoot_p : 0.2
+  sharpen_p : 0.05
+  unsharp_mask_p : 0.05
+  blur_sequence_p : 1.0
 
 score:
   masks_names:

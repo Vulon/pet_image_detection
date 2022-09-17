@@ -33,10 +33,12 @@ class TrainingConfig:
     train_mode: str
     container_data_folder: str
 
+    evaluation_strategy: str
     eval_steps: int
     train_batch_size: int
     val_batch_size: int
     epochs: int
+    warmup_epochs: int
     learning_rate: float
     weight_decay: float
     save_steps: int
@@ -44,16 +46,54 @@ class TrainingConfig:
     gradient_accumulation_steps: int
     eval_accumulation_steps: int
     logging_strategy: str
+    logging_steps: int
     tensorboard_logs_directory: str
     trainer_checkpoint: str
 
     test_metrics_path: str
 
+    data_portion: float
+
 
 @dataclass
 class AugmentationsConfig:
     rotate_angle: int
-    mask_size: int
+    rotate_p: float
+    flip_p: float
+    rotate_sequence_p: float
+
+    gauss_noise_var_limit: list[int]
+    gauss_noise_p: float
+    iso_color_shift: list[float]
+    iso_intensity: list[float]
+    iso_p: float
+    noise_sequence_p: float
+
+    brightness: float
+    contrast: float
+    saturation: float
+    hue: float
+    color_jitter_p: float
+    CLAHE_p: float
+    graphical_sequence_p: float
+
+    downscale_scale_min: float
+    downscale_scale_max: float
+    downscale_p: float
+    image_compression_p: float
+    compression_sequence_p: float
+
+    pixel_dropout_dropout_prob: float
+    pixel_dropout_p: float
+    grid_distortion_p: float
+    optical_distortion_p: float
+    perspective_p: float
+    dropout_sequence_p: float
+
+    ringing_overshoot_p: float
+    sharpen_p: float
+    unsharp_mask_p: float
+    blur_sequence_p: float
 
 
 @dataclass
